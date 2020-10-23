@@ -10,19 +10,34 @@
 npm install --save use-form-input-validator
 ```
 
-## Usage
+## Simple Usage
 
 ```jsx
-import React, { Component } from 'react'
-
-import MyComponent from 'use-form-input-validator'
+import React from 'react'
+import useFormValidator from 'use-form-input-validator'
 import 'use-form-input-validator/dist/index.css'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const App = () => {
+  const { fields, updateField } = useFormValidator({
+    email: {
+      value: '', // defuallt changes
+      error: '',
+      checks: 'required|email', // checks to run on the field on change
+      validate: (e) => {}
+    }
+  })
+
+  return (
+    <div>
+      <label htmlFor='email'>Email: </label>
+      <input name='email' onChange={updateField} />
+      <br />
+      <small style={{ color: 'red' }}>{fields.email.error}</small>
+    </div>
+  )
 }
+
+export default App
 ```
 
 ## License

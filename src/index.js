@@ -76,7 +76,14 @@ const reducer = (state, action) => {
 const useFormValidator = (inputs) => {
   const [fields, setFormField] = useReducer(reducer, inputs)
 
-  const updateField = ({ key, value }) => {
+  const updateField = (e) => {
+    validateField({
+      key: e.target.name,
+      value: e.target.value
+    })
+  }
+
+  const validateField = ({ key, value }) => {
     if (!fields[key]) {
       throw Error(`Field with key "${key}" not found, please make sure it is define in as follows:
       useFormValidator({
@@ -122,7 +129,7 @@ const useFormValidator = (inputs) => {
     return hasError
   }
 
-  return { fields, updateField, validateAllFields }
+  return { fields, updateField, validateField, validateAllFields }
 }
 
 export default useFormValidator

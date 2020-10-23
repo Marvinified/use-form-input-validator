@@ -14,16 +14,9 @@ const App = () => {
 
   return (
     <div>
-      <label></label>
-      <input
-        name='email'
-        onChange={(e) => {
-          updateField({
-            key: e.target.name,
-            value: e.target.value
-          })
-        }}
-      />
+      <label htmlFor='email'>Email: </label>
+      <input name='email' onChange={updateField} />
+      <br />
       <small style={{ color: 'red' }}>{fields.email.error}</small>
     </div>
   )

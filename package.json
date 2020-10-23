@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
+  "typings": "@types/index",
   "engines": {
     "node": ">=10"
   },
@@ -48,6 +49,10 @@
     "react-scripts": "^3.4.1"
   },
   "files": [
-    "dist"
-  ]
+    "dist",
+    "@types"
+  ],
+  "dependencies": {
+    "validator": "^13.1.17"
+  }
 }

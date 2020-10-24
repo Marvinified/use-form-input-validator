@@ -130,39 +130,39 @@ export default App
 
 ## Available Checks
 
-- ### `alpha`
+- #### `alpha`
 
   The field under validation must be entirely alphabetic characters.
 
-- ### `alpha_num`
+- #### `alpha_num`
 
   The field under validation must be entirely alpha-numeric characters.
 
-- ### `date`
+- #### `date`
 
   The field under validation must be a valid date.
 
-- ### `email`
+- #### `email`
 
   The field under validation must be a valid email address.
 
-- ### `match:`_`regex`_
+- #### `match:`_`regex`_
 
   he field under validation must match the given regular expression.
 
-- ### `min:`_`limit`_
+- #### `min:`_`limit`_
 
   The field under validation must have a minimium of _`limit`_ number of character.
 
-- ### `max:`_`limit`_
+- #### `max:`_`limit`_
 
   The field under validation must have a maximium of _`limit`_ number of character.
 
-- ### `num`
+- #### `num`
 
   The field under validation must be a number
 
-- ### `tel`
+- #### `tel`
 
   The field under validation must be a mobile phone number
 

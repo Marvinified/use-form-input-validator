@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import validator from 'validator'
 
-const validate = ({ key, value, checks, customValidator }) => {
+const validate = ({ value, checks, customValidator }) => {
   if (checks) {
     checks = checks.split('|')
     for (const check of checks) {
@@ -16,7 +16,8 @@ const validate = ({ key, value, checks, customValidator }) => {
             return `Doesn't match ${checkConstraint.trim()}`
           break
         case 'date':
-          if (value && !validator.toDate(value)) return `Not a valid date.`
+          if (value && validator.toDate(value) === null)
+            return `Not a valid date.`
           break
         case 'email':
           if (value && !validator.isEmail(value)) return 'Not a valid email.'
@@ -35,6 +36,10 @@ const validate = ({ key, value, checks, customValidator }) => {
         case 'num':
           if (value && !validator.isNumeric(value))
             return 'Only Numbers allowed.'
+          break
+        case 'tel':
+          if (value && !validator.isMobilePhone(value))
+            return 'Not a valid mobile phone number.'
           break
         case 'min':
           if (value && value.length < parseInt(checkConstraint))
@@ -57,15 +62,17 @@ const reducer = (state, action) => {
     case 'UPDATE_FIELD':
       return {
         ...state,
-        [action.payload.key]: {
-          ...state[action.payload.key],
-          value: action.payload.value,
-          error: validate({
+        errors: {
+          ...state.errors,
+          [action.payload.key]: validate({
             key: action.payload.key,
             value: action.payload.value,
-            checks: state[action.payload.key].checks,
-            customValidator: state[action.payload.key]?.validate
+            checks: state.checks[action.payload.key],
+            customValidator: state.validators[action.payload.key]
           })
+        },
+        values: {
+          [action.payload.key]: action.payload.value
         }
       }
     default:
@@ -74,7 +81,20 @@ const reducer = (state, action) => {
 }
 
 const useFormValidator = (inputs) => {
-  const [fields, setFormField] = useReducer(reducer, inputs)
+  const initial = {
+    checks: {},
+    values: {},
+    validators: {},
+    errors: {}
+  }
+
+  for (const key in inputs) {
+    initial.checks[key] = inputs[key].checks
+    initial.validators[key] = inputs[key].validate
+    initial.values[key] = inputs[key].value
+    initial.errors[key] = ''
+  }
+  const [fields, setFormField] = useReducer(reducer, initial)
 
   const updateField = (e) => {
     validateField({
@@ -84,7 +104,7 @@ const useFormValidator = (inputs) => {
   }
 
   const validateField = ({ key, value }) => {
-    if (!fields[key]) {
+    if (fields.values[key] === undefined) {
       throw Error(`Field with key "${key}" not found, please make sure it is define in as follows:
       useFormValidator({
         ${key}: {
@@ -104,32 +124,47 @@ const useFormValidator = (inputs) => {
     })
   }
 
-  const validateAllFields = () => {
-    let hasError = false
+  const isFieldValid = (key) => {
+    validateField({
+      key,
+      value: fields.values[key]
+    })
+    // if error exist
+    if (fields.errors[key]) return false
+    // else
+    return true
+  }
 
-    for (const key in fields) {
+  const isAllFieldsValid = () => {
+    let valid = true
+
+    for (const key in fields.values) {
       const error = validate({
-        key,
-        value: fields[key].value,
-        checks: fields[key].checks
+        value: fields.values[key],
+        checks: fields.checks[key]
       })
 
-      if (error) hasError = true
+      if (error) valid = false
 
       setFormField({
         type: 'UPDATE_FIELD',
         payload: {
           key,
-          value: fields[key].value,
-          checks: fields[key].checks
+          value: fields.values[key],
+          checks: fields.checks[key]
         }
       })
     }
 
-    return hasError
+    return valid
   }
-
-  return { fields, updateField, validateField, validateAllFields }
+  return {
+    values: fields.values,
+    errors: fields.errors,
+    isAllFieldsValid,
+    isFieldValid,
+    updateField
+  }
 }
 
 export default useFormValidator

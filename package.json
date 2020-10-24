@@ -48,6 +48,16 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1"
   },
+  "keywords": [
+    "react",
+    "react hooks",
+    "input validation",
+    "input validator",
+    "form validator",
+    "form",
+    "input",
+    "validation"
+  ],
   "files": [
     "dist",
     "@types"

@@ -1,6 +1,6 @@
 # 🆗 use-form-input-validator
 
-> React hooks library to validate your form inputs with ease.
+React hooks library to validate your form inputs with easily configurable checks and validators.
 
 [![NPM](https://img.shields.io/npm/v/use-form-input-validator.svg)](https://www.npmjs.com/package/use-form-input-validator) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -14,7 +14,7 @@ yarn add use-form-input-validator
 
 ## Fork Demo on Codesandbox
 
-[![Edit usestate-useeffect](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/use-file-upload-jrbe2)
+[![Edit funny-khayyam-l4cbn](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/funny-khayyam-l4cbn?fontsize=14&hidenavigation=1&theme=dark)
 
 # Usage
 

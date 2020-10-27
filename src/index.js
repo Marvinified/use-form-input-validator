@@ -72,6 +72,7 @@ const reducer = (state, action) => {
           })
         },
         values: {
+          ...state.values,
           [action.payload.key]: action.payload.value
         }
       }
@@ -109,7 +110,6 @@ const useFormValidator = (inputs) => {
       useFormValidator({
         ${key}: {
           value: "",
-          error: "",
           checks: "required"
         }
       })

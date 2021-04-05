@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import validator from 'validator'
 
-const validate = ({ value, checks, customValidator }) => {
+const validate = ({ value, values, checks, customValidator }) => {
   if (checks) {
     checks = checks.split('|')
     for (const check of checks) {
@@ -54,7 +54,7 @@ const validate = ({ value, checks, customValidator }) => {
       }
     }
   }
-  return typeof customValidator === 'function' && customValidator(value)
+  return typeof customValidator === 'function' && customValidator(value, values)
 }
 
 const reducer = (state, action) => {
@@ -67,6 +67,7 @@ const reducer = (state, action) => {
           [action.payload.key]: validate({
             key: action.payload.key,
             value: action.payload.value,
+            values: state.values,
             checks: state.checks[action.payload.key],
             customValidator: state.validators[action.payload.key]
           })

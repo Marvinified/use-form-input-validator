@@ -20,7 +20,20 @@ const App = () => {
           return 'The word "kepler" cannot be included in your username'
         }
       }
-    }
+    },
+    password: {
+      value: '', // defuallt changes
+      checks: 'required|min:8', // checks to run on the field on change
+    },
+    confirmPassword: {
+      value: '', // defuallt changes
+      checks: 'required|min:8', // checks to run on the field on change
+      validate: (value, values) => {
+        if (value !== values?.password) {
+          return "Confirm password doesn't match password"
+        }
+      }
+    },
   })
 
   const handleSubmit = (e) => {
@@ -42,6 +55,16 @@ const App = () => {
       <input name='email' onChange={updateField} />
       <br />
       <small style={{ color: 'red' }}>{errors.email}</small>
+      <br />
+      <label htmlFor='password'>Password: </label>
+      <input name='password' onChange={updateField} />
+      <br />
+      <small style={{ color: 'red' }}>{errors.password}</small>
+      <br />
+      <label htmlFor='confirmPassword'>Confirm: </label>
+      <input name='confirmPassword' onChange={updateField} />
+      <br />
+      <small style={{ color: 'red' }}>{errors.confirmPassword}</small>
       <br />
       <button onClick={handleSubmit}>Submit</button>
     </div>

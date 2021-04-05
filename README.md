@@ -16,6 +16,12 @@ yarn add use-form-input-validator
 
 [![Edit funny-khayyam-l4cbn](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/funny-khayyam-l4cbn?fontsize=14&hidenavigation=1&theme=dark)
 
+<br />
+
+> **What's New**✨ You can now reference other values in the custom validator for scenerios like checking if `confirm password` field matchs password `field`
+
+<br />
+
 # Usage
 
 ## Simple Usage
@@ -90,6 +96,33 @@ You can add a custom validator in addition to `checks` to create more complex va
       }
     }
   })
+  ...
+```
+
+## Access other fields value
+
+You can now access other fields values in the custom validator. This is useful in certain scenarios. For example, when you want to check if confirm password field matches the password field.
+
+```jsx
+  ...
+
+  const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
+    password: {
+      value: '',
+      checks: 'required|min:8', // checks to run on the field on change
+    },
+    confirmPassword: {
+      value: '',
+      checks: 'required|min:8', // checks to run on the field on change
+      // Custom validator
+      validate: (value, values) => {
+          if(value !== values.comfirmPassword){
+            return "Confirm Password doesn't match passward"
+          }
+      }
+    }
+  })
+
   ...
 ```
 

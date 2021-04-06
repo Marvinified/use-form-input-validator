@@ -116,7 +116,7 @@ You can now access other fields values in the custom validator. This is useful i
       checks: 'required|min:8', // checks to run on the field on change
       // Custom validator
       validate: (value, values) => {
-          if(value !== values.comfirmPassword){
+          if(value !== values.password){
             return "Confirm Password doesn't match passward"
           }
       }

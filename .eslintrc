@@ -11,6 +11,7 @@
     "node": true
   },
   "parserOptions": {
+    "parser": "@typescript-eslint/parser",
     "ecmaVersion": 2020,
     "ecmaFeatures": {
       "legacyDecorators": true,

@@ -142,7 +142,9 @@ const useFormValidator = (inputs) => {
     for (const key in fields.values) {
       const error = validate({
         value: fields.values[key],
-        checks: fields.checks[key]
+        values: fields.values,
+        checks: fields.checks[key],
+        customValidator: fields.validators[key]
       })
 
       if (error) valid = false
